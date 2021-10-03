@@ -58,6 +58,12 @@ ResetHandler:
     # This is a cold boot, perform hardware initialization
 
     InitializeMainMemory:
+        # Enable main memory in EXMEMCNT
+        mov r0, EXMEMCNT_MainMemoryEnable
+        str r0, [r4, IO_EXMEMCNT]
+
+        # TODO: Check whether it is necessary to wait here or not.
+
         ldr r1, .0
         ldr r2, .0 + 4
 
@@ -76,6 +82,10 @@ ResetHandler:
         # The next read from a main memory address will set the new configuration data.
         # Bits 1-21 of the address contain the new configuration data!
         ldrh r0, [r2]
+
+        # Complete main memory initialization by writing to EXMEMCNT
+        mov r0, EXMEMCNT_MainMemorySynchronous | EXMEMCNT_MainMemoryEnable
+        str r0, [r4, IO_EXMEMCNT]
 
     sub pc, pc, 8
 

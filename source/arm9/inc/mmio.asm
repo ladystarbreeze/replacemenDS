@@ -7,6 +7,13 @@
 
 # NOTE: All registers (except CR) are specified as offsets to the MMIO base address.
 
+# Memory Control registers
+.set IO_EXMEMCNT, 0x204
+
+# IO_EXMEMCNT
+.set EXMEMCNT_MainMemoryEnable     , 1 << 13
+.set EXMEMCNT_MainMemorySynchronous, 1 << 14
+
 # System Control registers
 .set IO_POSTFLG, 0x300
 
