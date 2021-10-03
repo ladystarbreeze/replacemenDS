@@ -48,9 +48,9 @@ UnhandledException:
 # Reset exception handler
 ResetHandler:
     # Check POSTFLG register
-    mov r4, ADDR_IO
-    ldrb r0, [r4, IO_POSTFLG]
-    tst r0, POSTFLG_BootCompleted
+    mov r4, #ADDR_IO
+    ldrb r0, [r4, #IO_POSTFLG]
+    tst r0, #POSTFLG_BootCompleted
 
     # ARM9 has already completed the boot procedure, this is a warm boot!
     bne WarmBoot
@@ -59,8 +59,8 @@ ResetHandler:
 
     InitializeMainMemory:
         # Enable main memory in EXMEMCNT
-        mov r0, EXMEMCNT_MainMemoryEnable
-        str r0, [r4, IO_EXMEMCNT]
+        mov r0, #EXMEMCNT_MainMemoryEnable
+        str r0, [r4, #IO_EXMEMCNT]
 
         # TODO: Check whether it is necessary to wait here or not.
 
@@ -84,10 +84,13 @@ ResetHandler:
         ldrh r0, [r2]
 
         # Complete main memory initialization by writing to EXMEMCNT
-        mov r0, EXMEMCNT_MainMemorySynchronous | EXMEMCNT_MainMemoryEnable
-        str r0, [r4, IO_EXMEMCNT]
+        mov r0, #EXMEMCNT_MainMemorySynchronous | EXMEMCNT_MainMemoryEnable
+        str r0, [r4, #IO_EXMEMCNT]
+    
+    # Initialize System Co-processor
+    bl CP15_Initialize
 
-    sub pc, pc, 8
+    sub pc, pc, #8
 
     # Pool
     .0:
@@ -96,3 +99,5 @@ ResetHandler:
 
 WarmBoot:
     b WarmBoot
+
+.include "systemCP.asm"
