@@ -23,16 +23,16 @@ CP15_Initialize:
 .arm
 CP15_DisableCaches:
     @ Disable data and instruction caches
-    CP15_ReadCR 0
+    CP15_ReadCR r0
     ldr r1, =#CP15_CR_InstructionCacheEnable | CP15_CR_DataCacheEnable
     bic r0, r0, r1
-    CP15_WriteCR 0
+    CP15_WriteCR r0
 
     @ Invalidate contents of data and instruction caches
     mov r0, #0
-    CP15_InvalidateDataCache 0
-    CP15_InvalidateInstructionCache 0
-    CP15_DrainWriteBuffer 0
+    CP15_InvalidateDataCache r0
+    CP15_InvalidateInstructionCache r0
+    CP15_DrainWriteBuffer r0
 
     bx lr
 
@@ -41,19 +41,19 @@ CP15_DisableCaches:
 CP15_InitializeDTCM:
     @ Set DTCM size and base address
     ldr r0, =#ADDR_DTCM | (5 << 1)
-    CP15_WriteDTCMSize 0
+    CP15_WriteDTCMSize r0
 
     @ Enable DTCM
-    CP15_ReadCR 0
+    CP15_ReadCR r0
     orr r0, r0, #CP15_CR_DTCMEnable
-    CP15_WriteCR 0
+    CP15_WriteCR r0
 
     bx lr
 
 @ Returns the DTCM size and base address
 .arm
 CP15_GetDTCMSizeAndBase:
-    CP15_ReadDTCMSize 1
+    CP15_ReadDTCMSize r1
 
     @ DTCM Base = CP15_DTCMSize & 0xFFFFF000
     mov r0, r1, lsr #12

@@ -18,32 +18,32 @@
 
 @ CP15 macros
 .macro CP15_ReadCR dst
-    mrc p15, 0, r\dst, c1, c0, 0
+    mrc p15, 0, \dst, c1, c0, 0
 .endm
 
 .macro CP15_WriteCR src
-    mcr p15, 0, r\src, c1, c0, 0
+    mcr p15, 0, \src, c1, c0, 0
 .endm
 
 .macro CP15_ReadDTCMSize dst
-    mrc p15, 0, r\dst, c9, c1, 0
+    mrc p15, 0, \dst, c9, c1, 0
 .endm
 
 .macro CP15_WriteDTCMSize src
-    mcr p15, 0, r\src, c9, c1, 0
+    mcr p15, 0, \src, c9, c1, 0
 .endm
 
 .macro CP15_InvalidateDataCache src
     @ The value in rs should be 0!
-    mcr p15, 0, r\src, c7, c6, 0
+    mcr p15, 0, \src, c7, c6, 0
 .endm
 
 .macro CP15_InvalidateInstructionCache src
     @ The value in rs should be 0!
-    mcr p15, 0, r\src, c7, c5, 0
+    mcr p15, 0, \src, c7, c5, 0
 .endm
 
 .macro CP15_DrainWriteBuffer src
     @ The value in rs should be 0!
-    mcr p15, 0, r\src, c7, c10, 4
+    mcr p15, 0, \src, c7, c10, 4
 .endm
