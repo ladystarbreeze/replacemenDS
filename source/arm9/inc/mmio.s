@@ -7,6 +7,13 @@
 
 @ NOTE: All registers (except CR) are specified as offsets to the MMIO base address.
 
+@ Inter-processor Communication registers
+.equ IO_IPCSYNC, 0x180
+
+@ IO_IPCSYNC
+.equ IPCSYNC_SendIRQ  , 1 << 13
+.equ IPCSYNC_IRQEnable, 1 << 14
+
 @ Memory Control registers
 .equ IO_EXMEMCNT, 0x204
 

@@ -101,6 +101,8 @@ ResetHandler:
 
     @ We're in System mode now
 
+    blx InitializeSharedMemory
+
     b .
 
     .pool
@@ -109,6 +111,28 @@ ResetHandler:
 WarmBoot:
     b WarmBoot
 
+.thumb
+InitializeSharedMemory:
+    push {r4, lr}
+
+    @ Note: I'm not quite sure what these messages mean but ARM7 expects them.
+    @ Send '0' over IPCSYNC, wait for a '0' response
+    ldr r4, =#ADDR_IO + IO_IPCSYNC
+    mov r0, #0
+    strh r0, [r4]
+    bl IPC_WaitSync
+
+    @ Send '1' over IPCSYNC, wait for a '1' response
+    lsr r0, r4, #18
+    strh r0, [r4]
+    lsr r0, r0, #8
+    bl IPC_WaitSync
+
+    b .
+
+.pool
+
 .include "swi/swiMisc.s"
 .include "swi/swiReset.s"
 .include "systemCP.s"
+.include "ipc.s"
