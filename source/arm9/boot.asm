@@ -24,11 +24,11 @@ ExceptionVectors:
     b UnhandledException
 
     # Normally, this vector would branch to a Prefetch Abort exception handler.
-    # However, we won't use type of exception.
+    # However, we won't use this type of exception.
     b UnhandledException
 
     # Normally, this vector would branch to a Data Abort exception handler.
-    # However, we won't use type of exception.
+    # However, we won't use this type of exception.
     b UnhandledException
 
     # This type of exception is not supported on ARMv4T and higher.
@@ -39,7 +39,7 @@ ExceptionVectors:
     b UnhandledException
 
     # Normally, this vector would branch to a Fast Interrupt exception handler.
-    # However, we won't use type of exception.
+    # However, we won't use this type of exception.
     b UnhandledException
 
 UnhandledException:
