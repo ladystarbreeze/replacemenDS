@@ -8,6 +8,8 @@
 .include "inc/cp15.asm"
 .include "inc/memory.asm"
 
+.arm
+
 # Sets all relevant CP15 registers to a default state
 CP15_Initialize:
     # Save link register as the stack might be unavailable

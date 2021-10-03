@@ -10,6 +10,8 @@
 .include "inc/mmio.asm"
 .include "inc/psr.asm"
 
+.arm
+
 # ARM9 exception vector base (located at physical address FFFF0000h)
 ExceptionVectors:
     # Branch to Reset code (SVC mode)
@@ -90,6 +92,9 @@ ResetHandler:
     # Initialize System Co-processor
     bl CP15_Initialize
 
+    # Initialize the stack
+    bl SoftReset_InitializeStack
+
     sub pc, pc, #8
 
     # Pool
@@ -100,4 +105,5 @@ ResetHandler:
 WarmBoot:
     b WarmBoot
 
+.include "swi/swiReset.asm"
 .include "systemCP.asm"

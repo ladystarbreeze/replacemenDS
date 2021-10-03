@@ -18,10 +18,10 @@
 .set PSR_I, 1 << 7 ; IRQ Disable!
 
 # Mode field
-.set PSR_MODE_USR, 0x10
-.set PSR_MODE_FIQ, 0x11
-.set PSR_MODE_IRQ, 0x12
-.set PSR_MODE_SVC, 0x13
-.set PSR_MODE_ABT, 0x17
-.set PSR_MODE_UND, 0x1B
-.set PSR_MODE_SYS, 0x1F
+.set PSR_USRMode, 0x10
+.set PSR_FIQMode, 0x11
+.set PSR_IRQMode, 0x12
+.set PSR_SVCMode, 0x13
+.set PSR_ABTMode, 0x17
+.set PSR_UNDMode, 0x1B
+.set PSR_SYSMode, 0x1F

@@ -25,6 +25,10 @@
     mcr p15, 0, r\src, c1, c0, 0
 .endm
 
+.macro CP15_ReadDTCMSize dst
+    mrc p15, 0, r\dst, c9, c1, 0
+.endm
+
 .macro CP15_WriteDTCMSize src
     mcr p15, 0, r\src, c9, c1, 0
 .endm
