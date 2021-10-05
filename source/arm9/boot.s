@@ -59,7 +59,7 @@ ResetHandler:
 
     @ This is a cold boot, perform hardware initialization
 
-    InitializeMainMemory:
+    .InitializeMainMemory:
         @ Enable main memory in EXMEMCNT
         mov r0, #EXMEMCNT_MainMemoryEnable
         str r0, [r4, #IO_EXMEMCNT]
