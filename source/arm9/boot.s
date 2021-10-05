@@ -35,8 +35,7 @@ ExceptionVectors:
     b UnhandledException
 
     @ Branch to Interrupt code (IRQ mode)
-    @ b IRQHandler
-    b UnhandledException
+    b IRQHandler
 
     @ Normally, this vector would branch to a Fast Interrupt exception handler.
     @ However, we won't use this type of exception.
@@ -45,6 +44,28 @@ ExceptionVectors:
 .arm
 UnhandledException:
     b UnhandledException
+
+@ Interrupt exception handler
+.arm
+IRQHandler:
+    @ Save all volatile registers and the link register
+    push {r0-r3, r12, lr}
+
+    @ Get DTCM base address
+    mrc p15, 0, r0, c9, c1, 0
+    mov r0, r0, lsr #12
+    mov r0, r0, lsl #12
+
+    @ Note: The user defined IRQ handler address is hardcoded.
+    @       We have to use the same address.
+    add r0, r0, #0x4000
+    mov lr, pc
+    ldr pc, [r0, #-4]
+
+    @ Restore all registers
+    pop {r0-r3, r12, lr}
+
+    subs pc, lr, #4
 
 @ Reset exception handler
 .arm

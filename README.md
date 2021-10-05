@@ -29,5 +29,6 @@ The first subgoal is a functional and decently compatible **ARM9 boot ROM**.
 ## **Progress**
 
 ### **ARM9 boot ROM**
+- Interrupt handler
 - Supervisor call dispatcher
-- SWI 00h, 03h
+- SWI 00h, 03h, 0Ch
