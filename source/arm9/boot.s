@@ -75,8 +75,8 @@ ResetHandler:
     ldrb r0, [r4, #IO_POSTFLG]
     tst r0, #POSTFLG_BootCompleted
 
-    @ ARM9 has already completed the boot procedure, this is a warm boot!
-    bne WarmBoot
+    @ ARM9 has already completed the boot procedure, this is a jump to 0!
+    bne UnhandledException
 
     @ This is a cold boot, perform hardware initialization
 
@@ -107,17 +107,33 @@ ResetHandler:
     blx InitializeSharedMemory
     blx ClearDTCMAndMainMemory
 
-    @ Reset Power Control 1
+    @ Clear Power Control 1
     mov r0, #0
     str r0, [r4, #IO_POWCNT1]
+
+    @ Allocate cartridge slots to ARM7
+    ldr r0, [r4, #IO_EXMEMCNT]
+    ldr r1, =#EXMEMCNT_MainMemoryARM7Priority | EXMEMCNT_NDSSlotARM7Access | EXMEMCNT_GBASlotARM7Access
+    orr r0, r0, r1
+    str r0, [r4, #IO_EXMEMCNT]
+
+    @ Initialize ROMCTRL
+    mov r0, #ROMCTRL_KEY1GapDummyCLK | ROMCTRL_SlowTransfer
+    str r0, [r4, #IO_ROMCTRL]
+
+    @ Send '2' over IPCSYNC, wait for a '3' response
+    mov r0, #2
+    blx IPC_SendSync
+    mov r0, #3
+    blx IPC_WaitSync
+
+    @ Send '3' over IPCSYNC
+    mov r0, #2
+    blx IPC_SendSync
 
     b .
 
     .pool
-
-.arm
-WarmBoot:
-    b WarmBoot
 
 .thumb
 InitializeMainMemory:

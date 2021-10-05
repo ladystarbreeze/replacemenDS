@@ -14,13 +14,23 @@
 .equ IPCSYNC_SendIRQ  , 1 << 13
 .equ IPCSYNC_IRQEnable, 1 << 14
 
+@ Cartridge registers
+.equ IO_ROMCTRL, 0x1A4
+
+@ IO_ROMCTRL
+.equ ROMCTRL_SlowTransfer   , 1 << 27
+.equ ROMCTRL_KEY1GapDummyCLK, 1 << 28
+
 @ Memory Control registers
 .equ IO_EXMEMCNT, 0x204
 .equ IO_WRAMCNT , 0x247
 
 @ IO_EXMEMCNT
-.equ EXMEMCNT_MainMemoryEnable     , 1 << 13
-.equ EXMEMCNT_MainMemorySynchronous, 1 << 14
+.equ EXMEMCNT_GBASlotARM7Access     , 1 <<  7
+.equ EXMEMCNT_NDSSlotARM7Access     , 1 << 11
+.equ EXMEMCNT_MainMemoryEnable      , 1 << 13
+.equ EXMEMCNT_MainMemorySynchronous , 1 << 14
+.equ EXMEMCNT_MainMemoryARM7Priority, 1 << 15
 
 @ IO_WRAMCNT
 .equ WRAMCNT_AllocateToARM9   , 0
