@@ -59,10 +59,10 @@ SWI_CpuFastSet:
         mov r10, r0
         mov r11, r0
     
-        .CpuSet_Fill_Loop:
+        .CpuFastSet_Fill_Loop:
             stmia r1!, {r4-r11}
             subs r3, r3, #1
-            bne .CpuSet_Fill_Loop
+            bne .CpuFastSet_Fill_Loop
         
         @ Return if there are no remaining words
         movs r2, r2
