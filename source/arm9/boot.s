@@ -66,7 +66,7 @@ ResetHandler:
     bl CP15_Initialize
 
     @ Initialize the stack
-    bl SoftReset_InitializeStack
+    bl .SoftReset_InitializeStack
 
     @ Note: We're in System mode now!
 

@@ -15,7 +15,7 @@ SWI_SoftReset:
     bl CP15_Initialize @ This subroutine is included in boot.s
 
     @ Initialize stack pointers and the stack area
-    bl SoftReset_InitializeStack
+    bl .SoftReset_InitializeStack
 
     b .
 
