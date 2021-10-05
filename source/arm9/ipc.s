@@ -21,15 +21,11 @@ IPC_WaitSync:
     
     bx lr
 
-.balign 4
-
-.pool
-
 @ Sends a message over IPCSYNC
 @ r0 = 4-bit IPC message
 .thumb
 IPC_SendSync:
-    ldr r1, =#ADDR_IO + IPCSYNC
+    ldr r1, =#ADDR_IO + IO_IPCSYNC
     lsl r0, #8
     strh r0, [r1]
 
