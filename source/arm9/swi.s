@@ -68,5 +68,6 @@ SWIHandler:
 SWI_Unhandled:
     b SWI_Unhandled
 
+.include "swi/swiCopy.s"
 .include "swi/swiMisc.s"
 .include "swi/swiReset.s"
