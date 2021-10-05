@@ -19,10 +19,15 @@ The first subgoal is a functional and decently compatible **ARM9 boot ROM**.
 
 ### **ARM9 boot ROM**
 - Add ARM9 boot code
-- Add ARM9 supervisor call dispatcher
-- Add ARM9 supervisor calls
+- Add more ARM9 supervisor calls
 - ...
 
 ### **Firmware**
 - Add Firmware stub
 - ...
+
+## **Progress**
+
+### **ARM9 boot ROM**
+- Supervisor call dispatcher
+- SWI 00h, 03h

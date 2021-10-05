@@ -21,8 +21,7 @@ ExceptionVectors:
     b UnhandledException
 
     @ Branch to Supervisor code (SVC mode)
-    @ b SVCHandler
-    b UnhandledException
+    b SWIHandler
 
     @ Normally, this vector would branch to a Prefetch Abort exception handler.
     @ However, we won't use this type of exception.
@@ -132,7 +131,6 @@ InitializeSharedMemory:
 
 .pool
 
-.include "swi/swiMisc.s"
-.include "swi/swiReset.s"
+.include "swi.s"
 .include "systemCP.s"
 .include "ipc.s"
