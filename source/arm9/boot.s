@@ -167,10 +167,13 @@ ClearDTCMAndMainMemory:
     push {r0, lr}
 
     @ Clear DTCM
-    @ TODO: Don't hardcode the DTCM address.
+    blx CP15_GetDTCMSizeAndBase
+    ldr r2, =#CpuSet_Fill
+    lsr r1, r1, #2
+    sub r1, #0x80
+    orr r2, r1
+    mov r1, r0
     mov r0, sp
-    ldr r1, =#ADDR_DTCM
-    ldr r2, =#CpuSet_Fill | (0x3E00 >> 2)
     blx SWI_CpuFastSet
 
     @ Clear high 32K of main memory
