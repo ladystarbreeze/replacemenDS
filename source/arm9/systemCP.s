@@ -51,6 +51,8 @@ CP15_InitializeDTCM:
     bx lr
 
 @ Returns the DTCM size and base address
+@ r0 = DTCM base address
+@ r1 = DTCM size
 .arm
 CP15_GetDTCMSizeAndBase:
     CP15_ReadDTCMSize r1

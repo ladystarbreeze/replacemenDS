@@ -51,12 +51,16 @@ SWIHandler:
 
     .SWITable:
         @ Note: The original ARM9 boot ROM does not handle SWI numbers >= 20h.
-        @ We will not handle them either.
+        @       We will not (yet?) handle them either.
         .word SWI_SoftReset
         .word SWI_Unhandled
         .word SWI_Unhandled
         .word SWI_WaitByLoop + 1
-        .rept 28
+        .rept 7
+        .word SWI_Unhandled
+        .endr
+        .word SWI_CpuFastSet
+        .rept 20
         .word SWI_Unhandled
         .endr
 

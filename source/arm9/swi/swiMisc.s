@@ -6,6 +6,7 @@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 @ SWI 03h - WaitByLoop
+@ r0 = Number of loop iterations (between 1 and 7FFFFFFFh)
 .thumb
 SWI_WaitByLoop:
     @ Use a wait loop to burn cycles.

@@ -16,13 +16,26 @@
 
 @ Memory Control registers
 .equ IO_EXMEMCNT, 0x204
+.equ IO_WRAMCNT , 0x247
 
 @ IO_EXMEMCNT
 .equ EXMEMCNT_MainMemoryEnable     , 1 << 13
 .equ EXMEMCNT_MainMemorySynchronous, 1 << 14
 
+@ IO_WRAMCNT
+.equ WRAMCNT_AllocateToARM9   , 0
+.equ WRAMCNT_AllocateLowToARM7, 1
+.equ WRAMCNT_AllocateLowToARM9, 2
+.equ WRAMCNT_AllocateToARM7   , 3
+
+@ Interrupt Control registers
+.equ IO_IME, 0x208
+.equ IO_IE , 0x210
+.equ IO_IF , 0x214
+
 @ System Control registers
 .equ IO_POSTFLG, 0x300
+.equ IO_POWCNT1, 0x304
 
 @ IO_POSTFLG
 .equ POSTFLG_BootCompleted, 1
