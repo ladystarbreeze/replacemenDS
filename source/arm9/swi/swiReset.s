@@ -16,8 +16,13 @@ SWI_SoftReset:
 
     @ Initialize stack pointers and the stack area
     bl .SoftReset_InitializeStack
+    blx .SoftReset_ClearRegisters
 
-    b .
+    @ Jump to return address in RAM
+    ldr lr, =#ADDR_MainMemory + 0x3FFE24
+    ldr lr, [lr]
+    
+    bx lr
 
     .SoftReset_InitializeStack:
         @ Set stack pointers relative to DTCM base, clear link registers and SPSRs
@@ -60,4 +65,22 @@ SWI_SoftReset:
             cmp r1, r2
             bne .ClearStackArea_Loop
         
+        bx lr
+    
+    .thumb
+    .SoftReset_ClearRegisters:
+        mov r0, #0
+        mov r1, #0
+        mov r2, #0
+        mov r3, #0
+        mov r4, #0
+        mov r5, #0
+        mov r6, #0
+        mov r7, #0
+        mov r8, #0
+        mov r9, #0
+        mov r10, #0
+        mov r11, #0
+        mov r12, #0
+
         bx lr
