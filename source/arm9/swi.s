@@ -60,9 +60,10 @@ SWIHandler:
         .word SWI_Unhandled
         .endr
         .word SWI_CpuFastSet
-        .rept 20
+        .rept 19
         .word SWI_Unhandled
         .endr
+        .word SWI_CustomPost
 
 .arm
 SWI_Unhandled:
