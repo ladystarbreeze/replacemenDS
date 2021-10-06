@@ -56,14 +56,17 @@ SWIHandler:
         .word SWI_Unhandled
         .word SWI_Unhandled
         .word SWI_WaitByLoop + 1
-        .rept 7
+        .rept 8
         .word SWI_Unhandled
         .endr
         .word SWI_CpuFastSet
-        .rept 19
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_IsDebugger + 1
+        .rept 15
         .word SWI_Unhandled
         .endr
-        .word SWI_CustomPost
+        .word SWI_CustomPost + 1
 
 .arm
 SWI_Unhandled:

@@ -19,7 +19,18 @@ SWI_WaitByLoop:
     
     bx lr
 
-@ SWI 03h - CustomPost
+.balign 4
+
+@ SWI 0Fh - IsDebugger
+@ r0 = 0 (Retail console), 1 (Debugger)
+.thumb
+SWI_IsDebugger:
+    @ Note: We don't support non-retail hardware, always return 0.
+    mov r0, #0
+
+    bx lr
+
+@ SWI 1Fh - CustomPost
 @ r0 = Data to be written to IO_POSTFLG
 .thumb
 SWI_CustomPost:
