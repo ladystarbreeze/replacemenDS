@@ -22,10 +22,10 @@ SWIHandler:
     mrs r11, spsr
     push {r11}
 
-    @ Switch into System mode
-    @ Note: It is fine to just OR PSR_SYSMode with r11. This does not overwrite the I bit.
+    @ Switch into System mode, preserve the I bit
+    and r11, r11, #PSR_I
     orr r11, r11, #PSR_SYSMode
-    msr cpsr_csxf, r11
+    msr cpsr_c, r11
 
     @ Save r2 and the System mode link register
     push {r2, lr}
@@ -56,21 +56,38 @@ SWIHandler:
         .word SWI_Unhandled
         .word SWI_Unhandled
         .word SWI_WaitByLoop + 1
-        .rept 8
+        .word SWI_IntrWait
+        .word SWI_VBlankIntrWait
+        .word SWI_Halt
         .word SWI_Unhandled
-        .endr
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
         .word SWI_CpuFastSet
         .word SWI_Unhandled
         .word SWI_Unhandled
         .word SWI_IsDebugger + 1
-        .rept 15
         .word SWI_Unhandled
-        .endr
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
+        .word SWI_Unhandled
         .word SWI_CustomPost + 1
 
 .arm
 SWI_Unhandled:
-    b SWI_Unhandled
+    bx lr
 
 .include "swi/swiCopy.s"
 .include "swi/swiMisc.s"

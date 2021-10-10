@@ -128,12 +128,22 @@ ResetHandler:
     blx IPC_WaitSync
 
     @ Send '3' over IPCSYNC
-    mov r0, #2
+    mov r0, #3
     blx IPC_SendSync
 
-    b .
+    @ Write POSTFLG
+    mov r0, #POSTFLG_BootCompleted
+    strb r0, [r4, #IO_POSTFLG]
 
-    .pool
+    blx .SoftReset_ClearRegisters
+
+    @ Jump to ARM9 entry point
+    ldr lr, =#ADDR_MainMemory + 0x3FF820
+    ldr lr, [lr]
+
+    bx lr
+
+.pool
 
 .thumb
 InitializeMainMemory:
@@ -227,3 +237,5 @@ ClearDTCMAndMainMemory:
 .include "swi.s"
 .include "systemCP.s"
 .include "ipc.s"
+
+.align 12
