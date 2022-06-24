@@ -90,6 +90,7 @@ ResetHandler:
     bl .SoftReset_InitializeStack
 
     @ Note: We're in System mode now!
+    @ Note: We can use the stack now!
 
     @ Note: I'm not quite sure what these messages mean but ARM7 expects them.
     @       We can customize this part when we're working on the ARM7 boot ROM.
@@ -147,6 +148,8 @@ ResetHandler:
 
 .thumb
 InitializeMainMemory:
+    mov r12, lr
+
     @ Enable main memory in EXMEMCNT
     ldr r3, =#ADDR_IO + IO_EXTMEMCNT
     ldr r0, =#EXMEMCNT_MainMemoryEnable
@@ -180,7 +183,7 @@ InitializeMainMemory:
     ldr r0, =#EXMEMCNT_MainMemorySynchronous | EXMEMCNT_MainMemoryEnable
     strh r0, [r3]
 
-    bx lr
+    bx r12
 
 .pool
 
