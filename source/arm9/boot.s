@@ -117,7 +117,7 @@ ResetHandler:
     str r0, [r4, #IO_ROMCTRL]
 
     @ Allocate cartridge slots to ARM7
-    ldr r4, =#ADDR_IO + IO_EXMEMCNT
+    add r4, #IO_EXMEMCNT
     ldrh r0, [r4]
     ldr r1, =#EXMEMCNT_MainMemoryARM7Priority | EXMEMCNT_NDSSlotARM7Access | EXMEMCNT_GBASlotARM7Access
     orr r0, r0, r1
@@ -141,11 +141,29 @@ ResetHandler:
 
     blx .SoftReset_ClearRegisters
 
-    @ Jump to ARM9 entry point
-    ldr lr, =#ADDR_MainMemory + 0x3FF820
+    @ Get ARM9 ROM entrypoint
+    ldr lr, =#ADDR_MainMemory + 0x3FFE24
     ldr lr, [lr]
 
-    bx lr
+    @ Not sure what this is for yet, but it has to be non-zero.
+    @ This is probably related to the firmware.
+    ldr r0, =ADDR_MainMemory + 0x3FF82C
+    ldr r0, [r0]
+    movs r0, r0
+    bleq .ResetHandler_FirmwareBootFailed
+
+    @ Not sure what this is for yet, but it has to be non-zero.
+    @ I assume this is the firmware entrypoint.
+    ldr r12, =ADDR_MainMemory + 0x3FF820
+    ldr r12, [r12]
+    movs r12, r12
+    bleq .ResetHandler_FirmwareBootFailed
+
+    @ Bye bye
+    bx r12
+
+    .ResetHandler_FirmwareBootFailed:
+        b .ResetHandler_FirmwareBootFailed
 
 .pool
 
