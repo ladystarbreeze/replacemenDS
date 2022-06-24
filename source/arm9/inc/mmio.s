@@ -15,7 +15,11 @@
 .equ IPCSYNC_IRQEnable, 1 << 14
 
 @ Cartridge registers
-.equ IO_ROMCTRL, 0x1A4
+.equ IO_AUXSPICNT, 0x1A0
+.equ IO_ROMCTRL  , 0x1A4
+
+@ IO_AUXSPICNT
+.equ AUXSPICNT_NDSSlotEnable, 1 << 15
 
 @ IO_ROMCTRL
 .equ ROMCTRL_SlowTransfer   , 1 << 27
