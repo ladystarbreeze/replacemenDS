@@ -112,15 +112,18 @@ ResetHandler:
     mov r0, #0
     str r0, [r4, #IO_POWCNT1]
 
-    @ Allocate cartridge slots to ARM7
-    ldr r0, [r4, #IO_EXMEMCNT]
-    ldr r1, =#EXMEMCNT_MainMemoryARM7Priority | EXMEMCNT_NDSSlotARM7Access | EXMEMCNT_GBASlotARM7Access
-    orr r0, r0, r1
-    str r0, [r4, #IO_EXMEMCNT]
-
     @ Initialize ROMCTRL
     mov r0, #ROMCTRL_KEY1GapDummyCLK | ROMCTRL_SlowTransfer
     str r0, [r4, #IO_ROMCTRL]
+
+    @ Allocate cartridge slots to ARM7
+    ldr r4, =#ADDR_IO + IO_EXMEMCNT
+    ldrh r0, [r4]
+    ldr r1, =#EXMEMCNT_MainMemoryARM7Priority | EXMEMCNT_NDSSlotARM7Access | EXMEMCNT_GBASlotARM7Access
+    orr r0, r0, r1
+    strh r0, [r4]
+
+    mov r4, #ADDR_IO
 
     @ Send '2' over IPCSYNC, wait for a '3' response
     mov r0, #2
