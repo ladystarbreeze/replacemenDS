@@ -25,6 +25,8 @@ SWI_SoftReset:
     bx lr
 
     .SoftReset_InitializeStack:
+        mov r12, lr
+
         @ Set stack pointers relative to DTCM base, clear link registers and SPSRs
         @ Note: The original ARM9 boot ROM hardcodes the stack pointers.
 
@@ -60,12 +62,12 @@ SWI_SoftReset:
         mov r0, #0
 
         .ClearStackArea_Loop:
-            str r0, [r2, r1]
+            str r0, [r1]
             add r1, #4
             cmp r1, r2
             bne .ClearStackArea_Loop
         
-        bx lr
+        bx r12
     
     .thumb
     .SoftReset_ClearRegisters:
