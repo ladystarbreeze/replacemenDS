@@ -152,12 +152,12 @@ ResetHandler:
     ldr lr, =#ADDR_MainMemory + 0x3FFE24
     ldr lr, [lr]
 
-    @ Not sure what this is for yet, but it has to be non-zero.
+    @ Not sure what this is for yet, but it has to be 0.
     @ This is probably related to the firmware.
     ldr r0, =ADDR_MainMemory + 0x3FF82C
     ldr r0, [r0]
     movs r0, r0
-    bleq .ResetHandler_FirmwareBootFailed
+    blne .ResetHandler_FirmwareBootFailed
 
     @ Not sure what this is for yet, but it has to be non-zero.
     @ I assume this is the firmware entrypoint.
