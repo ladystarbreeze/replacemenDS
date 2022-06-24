@@ -116,6 +116,13 @@ ResetHandler:
     mov r0, #ROMCTRL_KEY1GapDummyCLK | ROMCTRL_SlowTransfer
     str r0, [r4, #IO_ROMCTRL]
 
+    @ Initialize AUXSPICNT
+    add r4, #IO_AUXSPICNT
+    mov r0, #AUXSPICNT_NDSSlotEnable
+    strh r0, [r4]
+
+    mov r4, #ADDR_IO
+
     @ Allocate cartridge slots to ARM7
     add r4, #IO_EXMEMCNT
     ldrh r0, [r4]
