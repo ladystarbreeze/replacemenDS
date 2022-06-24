@@ -14,8 +14,10 @@ IPC_WaitSync:
     ldr r2, =#ADDR_IO + IO_IPCSYNC
 
     .WaitSync_Loop:
-        @ It should be fine use ldrb here, bits 4-7 of IPCSYNC are unused.
-        ldrb r1, [r2]
+        @ Read IPCSYNC, clear high 28 bits
+        ldrh r1, [r2]
+        lsl r1, #28
+        lsr r1, #28
         cmp r0, r1
         bne .WaitSync_Loop
     
