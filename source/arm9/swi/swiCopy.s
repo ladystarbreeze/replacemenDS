@@ -22,13 +22,17 @@ SWI_CpuFastSet:
     beq .CpuFastSet_Return
 
     @ Check if the requested operation is a fill or a copy
-    teq r2, #CpuSet_Fill
+    tst r2, #CpuSet_Fill
 
     @ r3 holds the 8-word chunk count, r2 the remaining word count
     and r2, r3, #7
     mov r3, r3, lsr #3
 
-    beq .CpuFastSet_Fill
+    bne .CpuFastSet_Fill
+
+    @ If there are no 8-byte chunks, do slow word copy
+    movs r3, r3
+    beq .CpuFastSet_SlowCopy
 
     .CpuFastSet_Copy:
         ldmia r0!, {r4-r11}
@@ -50,6 +54,11 @@ SWI_CpuFastSet:
 
     .CpuFastSet_Fill:
         ldr r0, [r0]
+
+        @ If there are no 8-byte chunks, do slow word fill
+        movs r3, r3
+        beq .CpuFastSet_SlowFill
+
         mov r4, r0
         mov r5, r0
         mov r6, r0
